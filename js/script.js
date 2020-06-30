@@ -67,11 +67,14 @@ $( document ).ready(function() {
         }
 
         // Миниатюры
-        const minSlide = `<div data-num="${ i }" ontouchend="changeSlide(this, event, ${ i })" class="image__min${ i === 0 ? ' active' : '' }">
+        const minSlide = `<div data-num="${ i }" ontouchstart="startToush(event)" ontouchend="changeSlide(this, event, ${ i })" class="image__min${ i === 0 ? ' active' : '' }">
             <img src="./img/${ el.img }-min.png" alt="${ el.city }">
             <div class="image__min_title">${ el.city }</div>
         </div>`;
         $('.slider__images-min').append(minSlide);
+        // $('.image__min').each((_, el) => {
+        //     $(el).addEventListeniar('ontouchend');
+        // });
 
         // Точки
         const dot = `<div class="slider__dot${ i === 0 ? ' active' : '' }"></div>`;
@@ -114,8 +117,13 @@ function changeInfo(el) {
     $('.slider__link').attr('href', el.whatsAppHref);
 }
 
-function changeSlide(selector, event ,i) {
-    if ($(selector).hasClass('active')) {
+let toushStart = 0;
+
+function changeSlide(selector, e ,i) {
+    const tousheEnd = e.changedTouches[0].clientX;
+    const changeThouch = toushStart - tousheEnd;
+    console.log(changeThouch);
+    if ($(selector).hasClass('active') || changeThouch !== 0 ) {
         return;
     }
     const left = $(window).width() * i;
@@ -130,4 +138,8 @@ function changeSlide(selector, event ,i) {
     $(selector).addClass('active');
     $(`.slider__img:nth-child(${ i + 1 })`).addClass('active');
     $(`.slider__dot:nth-child(${ i + 1 })`).addClass('active');
+}
+
+function startToush(e) {
+    toushStart = e.changedTouches[0].clientX;
 }
