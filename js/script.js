@@ -78,8 +78,9 @@ $( document ).ready(function() {
         $('.slider__dots').append(dot);
 
         $('.city__info').data('code', '');
-        $('.slider').css('height', $(window).innerHeight );
     });
+    
+    $('.slider').css('height', $(window).innerHeight );
 
     $('.slider__images-wrap').swipe( {
         swipeRight: function() {
