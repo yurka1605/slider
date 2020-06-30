@@ -37,6 +37,8 @@ const slides = [
 ];
 
 $( document ).ready(function() {
+    let vh = $(window).innerHeight() * 0.01;
+    $('.slider').attr('style', `--vh: ${ vh }px`);
     // Текущий урл
     const url = document.location.href;
     const slidesLength = slides.length;
@@ -79,8 +81,6 @@ $( document ).ready(function() {
 
         $('.city__info').data('code', '');
     });
-    
-    $('.slider').css('height', $(window).innerHeight );
 
     $('.slider__images-wrap').swipe( {
         swipeRight: function() {
