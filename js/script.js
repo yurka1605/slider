@@ -41,6 +41,7 @@ $( document ).ready(function() {
     const url = document.location.href;
     const slidesLength = slides.length;
     const slidesBox = parseInt(slidesLength / 3, 10);
+    const wraperWidth = $('.slider__images-wrap').width();
     // const ost = slidesLength % 3;
     
     // Сотрировка слайдов по текущему городу
@@ -82,26 +83,23 @@ $( document ).ready(function() {
 
     $('.slider__images-wrap').swipe( {
         swipeRight: function(event, direction) {
-            event.stopPropagation();
-            const wraperWidth = $('.slider__images-min').width();
-            const currentState = $('.slider__images-min').css('transform'); 
-            const currentStatePX = currentState === 'none' ? 'none' : 
-                parseFloat(currentState.split(',')[4]);
+            const currentState = $('.slider__images-min').css('transform');
+            const currentStatePX = currentState === 'none' ? 'none' : parseFloat(currentState.split(',')[4]);
+
             if (currentStatePX === 'none' || currentStatePX === 0) {
                 return;
             }
-            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX + wraperWidth}, 0)`);
+            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX + wraperWidth + 20}, 0)`);
         },
         swipeLeft: function(event, direction) {
-            event.stopPropagation();
-            const wraperWidth = $('.slider__images-min').width();
             const currentState = $('.slider__images-min').css('transform'); 
-            const currentStatePX = currentState === 'none' ? 0 : 
-                parseFloat(currentState.split(',')[4]);
-            if (currentStatePX === -$('.slider__images-min').width() * slidesBox) {
+            const currentStatePX = currentState === 'none' ? 0 : parseFloat(currentState.split(',')[4]);
+
+            if (currentStatePX === -parseFloat(wraperWidth * slidesBox + 20)) {
                 return;
             }
-            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX - wraperWidth}, 0)`);
+            console.log(wraperWidth * slidesBox + 20);
+            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX - wraperWidth - 20}, 0)`);
         },
         triggerOnTouchLeave: true,
         threshold: 0, // сработает через 80 пикселей

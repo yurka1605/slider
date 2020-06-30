@@ -122,7 +122,6 @@
 }
 .slider__images-wrap {
     width: 100%;
-    overflow: hidden;
 }
 .slider__images-min {
     display: flex;
