@@ -84,7 +84,7 @@ $( document ).ready(function() {
     });
 
     $('.slider__images-wrap').swipe( {
-        swipeRight: function(event, direction) {
+        swipeRight: function() {
             const currentState = $('.slider__images-min').css('transform');
             const currentStatePX = currentState === 'none' ? 'none' : parseFloat(currentState.split(',')[4]);
             const currentBox = parseInt(wrapper.data('box'));
@@ -95,7 +95,7 @@ $( document ).ready(function() {
             $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX + wrapper.width() + 20}, 0)`);
             wrapper.data('box', `${ currentBox - 1 }`);
         },
-        swipeLeft: function(event, direction) {
+        swipeLeft: function() {
             const currentState = $('.slider__images-min').css('transform'); 
             const currentStatePX = currentState === 'none' ? 0 : parseFloat(currentState.split(',')[4]);
             const currentBox = parseInt(wrapper.data('box'));
@@ -107,7 +107,7 @@ $( document ).ready(function() {
             wrapper.data('box', `${ currentBox + 1 }`);
         },
         triggerOnTouchLeave: true,
-        threshold: 0, // сработает через 80 пикселей
+        threshold: 20, // сработает через 20 пикселей
     });
 });
 
@@ -122,7 +122,6 @@ let toushStart = 0;
 function changeSlide(selector, e ,i) {
     const tousheEnd = e.changedTouches[0].clientX;
     const changeThouch = toushStart - tousheEnd;
-    console.log(changeThouch);
     if ($(selector).hasClass('active') || changeThouch !== 0 ) {
         return;
     }
@@ -138,6 +137,11 @@ function changeSlide(selector, e ,i) {
     $(selector).addClass('active');
     $(`.slider__img:nth-child(${ i + 1 })`).addClass('active');
     $(`.slider__dot:nth-child(${ i + 1 })`).addClass('active');
+    $('.city__info').css('transform', 'translateX(-130%)');
+    setTimeout(() => {
+        changeInfo(slides[i]);
+        $('.city__info').css('transform', 'translateX(0)');
+    }, 300);
 }
 
 function startToush(e) {
