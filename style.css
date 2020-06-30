@@ -29,6 +29,8 @@
 .slider {
     position: relative;
     height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -192,7 +194,7 @@
 
 @media (max-width: 540px) {
     .slider {
-        padding: 20px;
+        padding: 50px 20px;
     }
     .slider__img img {
         min-height: 100%;
