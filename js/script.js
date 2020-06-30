@@ -41,8 +41,7 @@ $( document ).ready(function() {
     const url = document.location.href;
     const slidesLength = slides.length;
     const slidesBox = parseInt(slidesLength / 3, 10);
-    const wraperWidth = $('.slider__images-wrap').width();
-    // const ost = slidesLength % 3;
+    const wrapper = $('.slider__images-wrap');
     
     // Сотрировка слайдов по текущему городу
     slides.forEach((el, i) => {
@@ -85,21 +84,24 @@ $( document ).ready(function() {
         swipeRight: function(event, direction) {
             const currentState = $('.slider__images-min').css('transform');
             const currentStatePX = currentState === 'none' ? 'none' : parseFloat(currentState.split(',')[4]);
-
-            if (currentStatePX === 'none' || currentStatePX === 0) {
+            const currentBox = parseInt(wrapper.data('box'));
+            if (currentBox === 0) {
                 return;
             }
-            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX + wraperWidth + 20}, 0)`);
+
+            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX + wrapper.width() + 20}, 0)`);
+            wrapper.data('box', `${ currentBox - 1 }`);
         },
         swipeLeft: function(event, direction) {
             const currentState = $('.slider__images-min').css('transform'); 
             const currentStatePX = currentState === 'none' ? 0 : parseFloat(currentState.split(',')[4]);
-
-            if (currentStatePX === -parseFloat(wraperWidth * slidesBox + 20)) {
+            const currentBox = parseInt(wrapper.data('box'));
+            if (currentBox === slidesBox) {
                 return;
             }
-            console.log(wraperWidth * slidesBox + 20);
-            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX - wraperWidth - 20}, 0)`);
+
+            $('.slider__images-min').css('transform', `matrix(1, 0, 0, 1, ${ currentStatePX - wrapper.width() - 20}, 0)`);
+            wrapper.data('box', `${ currentBox + 1 }`);
         },
         triggerOnTouchLeave: true,
         threshold: 0, // сработает через 80 пикселей
