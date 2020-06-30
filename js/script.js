@@ -72,15 +72,13 @@ $( document ).ready(function() {
             <div class="image__min_title">${ el.city }</div>
         </div>`;
         $('.slider__images-min').append(minSlide);
-        // $('.image__min').each((_, el) => {
-        //     $(el).addEventListeniar('ontouchend');
-        // });
 
         // Точки
         const dot = `<div class="slider__dot${ i === 0 ? ' active' : '' }"></div>`;
         $('.slider__dots').append(dot);
 
         $('.city__info').data('code', '');
+        $('.slider').css('height', $(window).innerHeight );
     });
 
     $('.slider__images-wrap').swipe( {

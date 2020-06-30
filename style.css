@@ -194,7 +194,7 @@
 
 @media (max-width: 540px) {
     .slider {
-        padding: 50px 20px;
+        padding: 20px;
     }
     .slider__img img {
         min-height: 100%;
