@@ -47,6 +47,7 @@
     flex-wrap: nowrap;
     width: auto;
     height: 100%;
+    transition: all 0.5s ease-in-out;
 }
 .slider__img {
     position: relative;
@@ -128,6 +129,7 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     width: auto;
+    transition: all 0.5s ease-in-out;
 }
 .image__min {
     min-width: 25%;
