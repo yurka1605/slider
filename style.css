@@ -25,6 +25,11 @@
     font-weight: 600;
     font-style: normal;
 }
+body, html {
+    width: 100vw;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+}
 .slider {
     position: relative;
     height: 100vh;

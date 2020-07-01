@@ -38,7 +38,7 @@ const slides = [
 
 $( document ).ready(function() {
     let vh = $(window).innerHeight() * 0.01;
-    $('.slider').attr('style', `--vh: ${ vh }px`);
+    $('.slider, body, html').attr('style', `--vh: ${ vh }px`);
     // Текущий урл
     const url = document.location.href;
     const slidesLength = slides.length;
