@@ -58,7 +58,7 @@ $( document ).ready(function() {
     // наполняем слайдер
     slides.forEach((el, i) => {
         // Слайды
-        const slide = `<div class="slider__img${ i === 0 ? ' active' : '' }">
+        const slide = `<div data-num="${ i }" class="slider__img${ i === 0 ? ' active' : '' }">
             <img src="./img/${ el.img }.png" alt="${ el.city }" title="${ el.city }">
         </div>`;
         $('.bg-shadow').before(slide);
@@ -69,8 +69,8 @@ $( document ).ready(function() {
         }
 
         // Миниатюры
-        const minSlide = `<div data-num="${ i }" ontouchstart="startToush(event)" ontouchend="changeSlide(this, event, ${ i })" class="image__min${ i === 0 ? ' active' : '' }">
-            <img src="./img/${ el.img }-min.png" alt="${ el.city }">
+        const minSlide = `<div data-num="${ i }" ontouchstart="startToush(event)" ontouchend="changeSlide(this, ${ i }, event)" class="image__min${ i === 0 ? ' active' : '' }">
+            <img src="./img/${ el.img }.png" alt="${ el.city }">
             <div class="image__min_title">${ el.city }</div>
         </div>`;
         $('.slider__images-min').append(minSlide);
@@ -80,6 +80,27 @@ $( document ).ready(function() {
         $('.slider__dots').append(dot);
 
         $('.city__info').data('code', '');
+    });
+
+    $('.wrapper').swipe({
+        swipeRight: function(e) {
+            e.stopPropagation();
+            const num = $('.slider__img.active').data('num') - 1;
+            if (num < 0) {
+                return;
+            }
+            changeSlide($('.slider__img.active').prev(), num, undefined);
+        },
+        swipeLeft: function(e) {
+            e.stopPropagation();
+            const num = $('.slider__img.active').data('num') + 1;
+            if (num === slidesLength) {
+                return;
+            }
+            changeSlide($('.slider__img.active').next(), num, undefined);
+        },
+        triggerOnTouchLeave: true,
+        threshold: 40,
     });
 
     $('.slider__images-wrap').swipe( {
@@ -118,22 +139,25 @@ function changeInfo(el) {
 
 let toushStart = 0;
 
-function changeSlide(selector, e ,i) {
-    const tousheEnd = e.changedTouches[0].clientX;
-    const changeThouch = toushStart - tousheEnd;
-    if ($(selector).hasClass('active') || changeThouch !== 0 ) {
-        return;
+function changeSlide(selector, i, e) {
+    if (e !== undefined) {
+        const tousheEnd = e.changedTouches[0].clientX;
+        const changeThouch = toushStart - tousheEnd;
+        if ($(selector).hasClass('active') || changeThouch !== 0 ) {
+            return;
+        }
     }
+
     const left = $(window).width() * i;
     $('.slider__images').css('transform', `translate(-${ left }px)`);
     $('.image__min').each((index, el) => {
         if ($(el).hasClass('active')) {
             $(`.slider__img:nth-child(${ index + 1 })`).removeClass('active');
             $(`.slider__dot:nth-child(${ index + 1 })`).removeClass('active');
-            $(el).removeClass('active')
+            $(`.image__min:nth-child(${ index + 1 })`).removeClass('active');
         }
     });
-    $(selector).addClass('active');
+    $(`.image__min:nth-child(${ i + 1 })`).addClass('active');
     $(`.slider__img:nth-child(${ i + 1 })`).addClass('active');
     $(`.slider__dot:nth-child(${ i + 1 })`).addClass('active');
     $('.city__info').css('transform', 'translateX(-130%)');

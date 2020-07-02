@@ -48,6 +48,12 @@ body, html {
     color: #ffffff;
     overflow: hidden;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
 .slider__images {
     position: absolute;
     top: 0;
@@ -106,8 +112,11 @@ body, html {
 }
 .city__info {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
-    height: auto;
+    height: 100%;
     transition: all 0.2s ease-in;
 }
 .slider__footer {
@@ -241,6 +250,7 @@ body, html {
         min-width: calc((100% - 40px) / 3);
         margin-right: 20px;
         max-width: 200px;
+        text-align: center;
     }
     .slider__header p {
         font-size: 14px;
@@ -262,7 +272,7 @@ body, html {
     }
     .slider__header img {
         height: 40px;
-        margin-right: 20px;
+        margin-right: 15px;
     }
     .slider__header p {
         font-size: 12px;
